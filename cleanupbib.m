@@ -13,7 +13,6 @@
 function [newBib,bibKeys]=cleanupbib(fileName,bibName,newFile)
 
 bibKeys=extractbibkeys(fileName);
-
 newBib=selectbibitems(bibName,bibKeys);
 
 if nargin==3
@@ -25,13 +24,11 @@ end
 
 function newBib=selectbibitems(fileName,bibKeys)
 
-formatSpec = '%s';
 fileID = fopen(fileName,'r');
 newBib={};
 startRec=false;
 tline = fgetl(fileID);
 while ischar(tline)
-    
     if startsWith(tline,'@')
         k1 = strfind(tline,'{');
         k2 = strfind(tline,',');
@@ -56,8 +53,6 @@ while ischar(tline)
 end
 
 fclose(fileID);
-
-
 newBib=newBib';
 
 end
@@ -65,9 +60,7 @@ end
 
 function bibKeys=extractbibkeys(fileName)
 
-formatSpec = '%s';
 fileID = fopen(fileName,'r');
-
 refNames={};
 tline = fgetl(fileID);
 while ischar(tline)
@@ -81,9 +74,7 @@ while ischar(tline)
     tline = fgetl(fileID);
 end
 
-
 fclose(fileID);
-
 bibKeys=unique(refNames)';
 
 end
@@ -91,9 +82,9 @@ end
 
 function savetexttofile(textToWrite,fileName)
 
-filePh = fopen(fileName,'w');
-fprintf(filePh,'%s\n',textToWrite{:});
-fclose(filePh);
+fileID=fopen(fileName,'w');
+fprintf(fileID,'%s\n',textToWrite{:});
+fclose(fileID);
 
 end
 
